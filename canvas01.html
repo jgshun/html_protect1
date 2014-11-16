@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas" width="500px" height="500px" style="background-color: grey;">
+			您的浏览器不支持html5canvas标签，请换个浏览器或者升级浏览器！
+		</canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById("canvas");
+			var cxt = canvas.getContext('2d');
+			//1 画一条线段
+			cxt.beginPath();
+			cxt.lineWidth = 10;
+			cxt.strokeStyle = 'red';
+			cxt.moveTo(20,20);
+			cxt.lineTo(100,20);
+			cxt.closePath();
+			cxt.stroke();
+			//画一个空心圆
+			cxt.beginPath();
+			cxt.arc(200,200,50,0,360,false);
+			cxt.closePath();
+			cxt.stroke();
+			//画一个实心圆
+			cxt.beginPath();
+			cxt.arc(300,300,20,0,360,false);
+			cxt.fillStyle = 'yellow';
+			cxt.fill();
+			cxt.closePath();
+			cxt.stroke(); //加上这个会把边框一起画出来，并且沿用上一次定义的画笔属性：宽度，颜色等
+			//画一个矩形
+				//方法一
+				cxt.rect(100,100,30,30);
+				cxt.stroke();
+				//方法二
+				cxt.strokeRect(100,150,30,30);
+			//画一个实心矩形
+				//方法一 
+					cxt.beginPath();
+					cxt.rect(100,200,30,30)
+					cxt.fillStyle ='green';
+					cxt.fill(); //填充的时候必须保护路径否则会影响的其他的画图
+					cxt.closePath();
+				//方法二
+				cxt.fillRect(100,250,30,30);//如果不需要设置外边框，建议使用这种填充方法
+			//设置文字
+				//设置字体
+				cxt.font='20px 黑体';
+				cxt.fillText('设置字符串成功!',100,300);
+				//设置镂空字体
+				cxt.lineWidth = 1;
+				cxt.font = '40px 黑体';
+				cxt.strokeText("黑色字体 镂空字",100,350,100);
+			
+			//画一个三角形
+			cxt.beginPath();
+			cxt.lineWidth = 10;
+			cxt.moveTo(300,500);//参数是坐标
+			cxt.lineTo(300,400);//参数是画到的坐标
+			cxt.lineTo(200,400);//参数是画到的坐标
+			cxt.closePath();
+			cxt.stroke();
+			//画一个实心三角形
+			cxt.beginPath();
+			cxt.fillStyle = 'blue';
+			cxt.moveTo(400,10);
+			cxt.lineTo(300,10);
+			cxt.lineTo(300,30);
+			cxt.fill();
+			cxt.closePath();
+
+			//把一个图片放入发布 
+//			var image = new Image();
+//			image.src='img/图片1.jpg';
+//			cxt.drawImage(img,400,40,300,300);//第四和第五个参数是图片的大小
+
+			//旋转一个线段
+			cxt.save();//保存画布环境--即把以前的图形保存起来
+			cxt.translate(20,20);//设置坐标原点
+			cxt.rotate(30*Math.PI/180);//设置旋转弧度
+			cxt.beginPath();
+			cxt.moveTo(0,0);
+			cxt.lineTo(80,0);
+			cxt.closePath();
+			cxt.stroke();
+			cxt.restore();//把以前的画布还原
+			//旋转一个图片
+//			cxt.save();
+//			cxt.translate(400,40);
+//			cxt.rotate(-10*Math.PI/180);//负号为逆时针旋转
+//			var image2 = new Image();
+//			image2.src = 'img/图片1.jpg';
+//			cxt.drawImage(image2,0,0,300,300);
+//			cxt.restore();
+
+		</script>
+	</body>
+</html>

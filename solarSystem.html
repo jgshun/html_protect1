@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="" />
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas" width="1350px" height="620px" style="background-color: black;">
+			您的浏览器不支持HTML5的canvas标签，请升级浏览器或者换一个浏览器！
+		</canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+//			画出8条轨道
+			function drawTrack(){
+				for(var i=1;i<9;i++){
+					context.beginPath();
+					context.lineWidth=1;
+					context.strokeStyle='grey';
+					context.arc(675,310,30*i,0,360,false);
+					context.closePath();
+					context.stroke();
+				}
+			}
+			
+			var time = 0; //1=1天
+			function Star(x,y,radial,sColor,eColor,cycle){
+				//坐标
+				this.x = x;
+				this.y = y;
+				//半径
+				this.radial = radial;
+				//渐变色
+				this.sColor = sColor;
+				this.eColor = eColor;
+				//周期
+				this.cycle = cycle;
+				this.drawStar = function(){
+					context.save();
+					context.translate(675,310);
+					if(this.cycle){
+						context.rotate(-time*360/this.cycle*Math.PI/180);
+					}
+					
+					
+					context.beginPath();
+					context.arc(this.x,this.y,this.radial,0,360,false);
+					var startStyle = context.createRadialGradient(this.x,this.y,0,this.x,this.y,this.radial);
+					startStyle.addColorStop(0,this.sColor);
+					startStyle.addColorStop(1,this.eColor);
+					context.fillStyle= startStyle;
+					context.fill();
+					context.closePath();
+					context.restore();
+				}
+				
+			}
+			function Sun(){
+				new Star(0,0,15,'#FFFF00','#FF9900',0).drawStar();
+			}
+			function Mercury(){   
+				new Star(30,0,4,'#A69697','#5C3E40',87.7).drawStar();
+			}
+			
+			function Venus(){
+				new Star(60,0,5,'#C4BBAC','#1F1315',224.701).drawStar();
+			}
+			function Earth(){
+				new Star(90,0,6,'#78B1E8','#050C12',365.2411).drawStar();
+			}
+			function Mars(){
+				new Star(120,0,7,'#CEC9B6','#76422D',686.98).drawStar();
+			}
+			function Jupiter(){
+				new Star(150,0,8,'#C0A48E','#322222',4332.589).drawStar();
+			}
+			function Saturn(){
+				new Star(180,0,6,'#F7F9E3','#5C4533',410759.5).drawStar();
+			}
+			function Uranus(){
+				new Star(210,0,5,'#A7E1E5','#19243A',30799.095).drawStar();
+			}
+			function Neptune(){
+				new Star(240,0,4,'#0661B2','#1E3B73',60152).drawStar();
+			}
+			function drawSolarSystem(){
+				context.clearRect(0,0,1350,620);
+				drawTrack();
+				
+				new Sun();
+				new Mercury();
+				
+				new Venus();
+				new Earth();
+				new Mars();
+				new Jupiter();
+				new Saturn();
+				new Uranus();
+				new Neptune();
+				
+				time++;
+			}
+			setInterval(drawSolarSystem,100);
+		</script>
+	</body>
+</html>

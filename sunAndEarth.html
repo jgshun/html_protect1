@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="" />
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas" width="1350px" height="620px" style="background-color: #000">
+			您的浏览器不支持HTML5的canvas标签，请升级浏览器或者换一个浏览器！
+		</canvas>
+		<script type="text/javascript">
+		var time = 0;
+		function drawSunAndEarth(){
+			var canvas = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+			context.clearRect(0,0,1350,620);
+			//首先画一个地球轨道 track
+			context.beginPath();
+			context.lineWidth = 1;
+			context.strokeStyle = 'grey';
+			context.arc(675,310,100,0,360,false);
+			context.closePath();
+			context.stroke();
+			//画一个太阳
+			context.beginPath();
+			context.arc(675,310,40,0,360,false);
+			//给太阳设置渐变色
+			var sunStyle = context.createRadialGradient(675,310,0,675,310,40);
+			sunStyle.addColorStop(0,'#FFFF00');
+			sunStyle.addColorStop(1,'#FF9900')
+			context.fillStyle = sunStyle;
+			context.fill();
+			context.closePath();
+			
+			//画一个地球
+			context.save();
+			context.translate(675,310);
+			context.rotate(-(time++)*360/365.2411*Math.PI/180);
+			context.beginPath();
+			context.arc(100,0,10,0,360);
+			//给地球设置渐变色
+			var earthStyle = context.createRadialGradient(100,0,0,100,0,10);
+			earthStyle.addColorStop(0,'#78B1E8');
+			earthStyle.addColorStop(1,'#050C12');
+			context.fillStyle = earthStyle;
+			context.fill();
+			context.closePath();
+			context.restore();
+		}
+			setInterval(drawSunAndEarth,100);
+			
+			
+		</script>
+	</body>
+</html>

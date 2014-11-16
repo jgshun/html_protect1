@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<canvas id="canvas" width="500px" height="500px">
+			您的浏览器不支持HTML5的canvas标签，请升级浏览器或者换一个浏览器！
+		</canvas>
+		<script type="text/javascript">
+		function drawClock(){
+			
+			var canvas = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+			context.clearRect(0,0,500,500);
+			
+			//首先画一个圆
+			context.beginPath();
+			context.lineWidth = 5;
+			context.strokeStyle = 'blue';
+			context.arc(250,250,120,0,360,false);
+			context.closePath();
+			context.stroke();
+			
+			//画小时刻度
+			for(var i=0;i<12;i++){
+				context.save();
+				context.translate(250,250);
+				context.rotate(i*30*Math.PI/180);
+				
+				context.beginPath();
+				context.lineWidth = 7;
+				context.strokeStyle = '#000';
+				context.moveTo(115,0);
+				context.lineTo(100,0);
+				context.closePath();
+				context.stroke();
+				context.restore();
+			}
+			
+			//画分钟刻度
+			for(var i = 0;i<60;i++){
+				context.save();
+				context.translate(250,250);
+				context.rotate(i*6*Math.PI/180);
+				context.beginPath();
+				context.lineWidth = 5;
+				context.strokeStyle = '#000';
+				context.moveTo(115,0);
+				context.lineTo(107,0);
+				context.closePath();
+				context.stroke();
+				context.restore();
+			}
+			var nowTime = new Date();
+			var seconds = nowTime.getSeconds();
+			var minutes = nowTime.getMinutes();
+			var hours = nowTime.getHours();
+			hours = hours>12?(hours-12):hours;
+			hours += minutes/60;
+			
+			//画时针
+			context.save();
+			context.translate(250,250);
+			context.rotate((hours*30-90)*Math.PI/180);
+			
+			context.beginPath();
+			context.lineWidth = 8;
+			context.strokeStyle = '#000';
+			context.moveTo(-15,0);
+			context.lineTo(75,0);
+			context.closePath();
+			context.stroke();
+			context.restore();
+			//画分针
+			context.save();
+			context.translate(250,250);
+			context.rotate((minutes*6-90)*Math.PI/180);
+		
+			context.beginPath();
+			context.lineWidth = 5;
+			context.strokeStyle = '#000';
+			context.moveTo(-15,0);
+			context.lineTo(85,0);
+			context.closePath();
+			context.stroke();
+			context.restore();
+			
+			//画秒针
+			context.save();
+			context.translate(250,250);
+			context.rotate((seconds*6-90)*Math.PI/180)
+		
+			context.beginPath();
+			context.lineWidth = 4;
+			context.strokeStyle = 'red';
+			context.moveTo(-15,0);
+			context.lineTo(95,0);
+			context.closePath();
+			context.stroke();
+			context.restore();
+			
+			//美化时钟
+			//画圆心
+			context.save();
+			context.translate(250,250);
+			context.beginPath();
+			context.lineWidth = 4;
+			context.strokeStyle = 'red';
+			context.arc(0,0,7,0,360,false);
+			context.fillStyle = 'grey';
+			context.fill();
+			context.closePath();
+			context.stroke();
+			context.restore();
+			
+			//画秒钟头部
+			context.save();
+			context.translate(250,250);
+			context.rotate((seconds*6-90)*Math.PI/180);
+			context.beginPath();
+			context.lineWidth = 4;
+			context.strokeStyle = 'red';
+			context.arc(76,0,5,0,360,false);
+			context.fillStyle = 'grey';
+			context.fill();
+			context.closePath();
+			context.stroke();
+			context.restore();
+			
+		}
+			drawClock();
+			setInterval(drawClock,1000);
+			
+		</script>
+	</body>
+</html>
